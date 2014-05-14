@@ -1,0 +1,114 @@
+body {
+    background: #eaefb5; /* Old browsers */
+    background: -moz-linear-gradient(top,  #eaefb5 0%, #e1e9a0 100%); /* FF3.6+ */
+    background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#eaefb5), color-stop(100%,#e1e9a0)); /* Chrome,Safari4+ */
+    background: -webkit-linear-gradient(top,  #eaefb5 0%,#e1e9a0 100%); /* Chrome10+,Safari5.1+ */
+    background: -o-linear-gradient(top,  #eaefb5 0%,#e1e9a0 100%); /* Opera 11.10+ */
+    background: -ms-linear-gradient(top,  #eaefb5 0%,#e1e9a0 100%); /* IE10+ */
+    background: linear-gradient(to bottom,  #eaefb5 0%,#e1e9a0 100%); /* W3C */
+    filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#eaefb5', endColorstr='#e1e9a0',GradientType=0 ); /* IE6-9 */
+}
+
+.reveal section.fullscreen h1 {
+    font-size: 1.4em;
+    background: white;
+    opacity: 0.8;
+    border-radius: 8px;
+    padding: .4em 0em;
+}
+
+.reveal section img.logo {
+  position: absolute;
+  z-index: -100;
+  opacity: .2;
+  top: 0;
+  left: -100px;
+  border: 0px;
+  height: 100%;
+}
+
+.reveal section.left img.logo {
+  position: absolute;
+  z-index: -100;
+  opacity: .6;
+  top: 0px;
+  left: auto;
+  right: -100px;
+  border: 0px;
+  height: 100%;
+}
+
+.reveal section.right {
+  text-align: right;
+}
+
+.reveal section.left {
+  text-align: left;
+}
+
+.reveal h4.pdf img {
+  border: 0px;
+  display: inline;
+  vertical-align: middle;
+}
+
+.reveal h4.pdf a {
+  vertical-align: middle;
+}
+
+.reveal h1, .reveal h2 {
+  font-family: 'Sigmar One', cursive;
+  text-shadow: 0 1px 0 #ccc,
+               0 2px 0 #c9c9c9,
+               0 3px 0 #bbb,
+               0 4px 0 #b9b9b9,
+               0 5px 0 #aaa,
+               0 6px 1px rgba(0,0,0,.1),
+               0 0 5px rgba(0,0,0,.1),
+               0 1px 3px rgba(0,0,0,.3),
+               0 3px 5px rgba(0,0,0,.2),
+               0 5px 10px rgba(0,0,0,.25),
+               0 10px 10px rgba(0,0,0,.2),
+               0 20px 20px rgba(0,0,0,.15);
+}
+
+span.black {
+  color: #333;
+}
+
+span.red {
+  color: #b10;
+}
+
+.reveal pre {
+    box-shadow: 0 0 0;
+    width: 100%;
+}
+
+.reveal li {
+    margin-bottom: .5em;
+}
+
+.reveal a:not(.image) {
+    color: #023342;
+}
+
+.reveal .controls div.navigate-down.enabled {
+    border-top-color: #023342;
+}
+
+.reveal .controls div.navigate-up.enabled {
+    border-bottom-color: #023342;
+}
+
+.reveal .controls div.navigate-right.enabled {
+    border-left-color: #023342;
+}
+
+.reveal .controls div.navigate-left.enabled {
+    border-right-color: #023342;
+}
+
+.reveal section img {
+    border: 0px;
+}
