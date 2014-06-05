@@ -1,106 +1,47 @@
 <section>
   <section>
-    <h2>Arquitectura</h2>
+    <h2>Recolector</h2>
     <ul>
-        <li>Explorador de enlaces/equipos</li>
-        <li>Recolector</li>
-        <li>Agentes</li>
-        <li>Presentación de datos</li>
+        <li>Recoge información</li>
+        <li>A intervalos fijos</li>
+        <li>Útil para comparativas</li>
+        <li>Visualizada con gráficas</li>
     </ul>
-    <img style="width: 150px;" src="img/pieces.png" />
+    <img style="width: 320px;" src="img/recolector.jpg" />
   </section>
+
+  <section class="fullscreen" data-background="img/colector01.png">
+  </section>
+
+  <section class="fullscreen" data-background="img/colector02.png">
+  </section>
+
   <section>
-    <h2>Explorador de enlaces/equipos</h2>
-    <p>Añadir un nuevo nodo o enlace al sistema tiene que ser tan fácil como introducir IP y coordenadas. El resto se obtiene de manera automática:</p>
+    <h2>Collectd + custom script</h2>
     <ul>
-        <li>Modelo de hardware, sistema, version</li>
-        <li>Interfaces de red funcionales</li>
-        <li>Validación de segmentos de red punto a punto.</li>
-        <li>Estado de la tabla de enrutado.</li>
+        <li><strong>Collectd</strong> se encarga de lanzar el script a intervalos regulares, y a almacenar la info en una base de datos RRD.</li>
+        <li>Sólo tenemos que crear scripts que alimenten a <strong>collectd</strong> con la información que nos interese monitorizar.</li>
     </ul>
-    <p><strong>¿Cómo?</strong>RouterOS API (Mikrotik), SSH (OpenWRT)</p>
   </section>
-  <section>
-    <h2>Línea de comandos explorador</h2>
-    <p>Añadir un nuevo nodo a la monitorización:</p>
-    <pre>
-        <code>
-$ cat node.json
-{
-    "name": "jrjimenez",
-    "system": "mikrotik",
-    "latlng": {
-        "lat": 39.979128,
-        "lng": -0.049640
-    }
-}
 
-$ ./manage add node node.json
-        </code>
-    </pre>
-  </section>
   <section>
-    <h2>Línea de comandos explorador</h2>
-    <p>Añadir un nuevo enlace a la monitorización:</p>
-    <pre>
-        <code>
-$ cat link.json
-{
-  "nodes": [
-    {
-        "name": "jrjimenez"
-    },
-    {
-        "name": "casalduch"
-    }
-  ]
-}
-
-$ ./manage add link link.json
-        </code>
-    </pre>
-  </section>
-  <section>
-    <h2>Línea de comandos explorador</h2>
-    <p>Actualizar todas las interfaces de los nodos monitorizados:</p>
+    <h2>Script que ejecuta collectd cada 20 min.</h2>
+    <p>Número de usuarios conectados al nodo, con señal mejor que -80dbm y peor que -80dbm</p>
     <pre>
         <code class="bash">
-$ ./manage update interfaces
-
-# Actualizar las interfaces del nodo castalia
-$ ./manage update interfaces castalia
+[dave@solicom5 gps]$ ./manage.js  monitor users
+PUTVAL "TorreSanVicente/node/connected_users" interval=1200 N:3:0
+PUTVAL "fsalvador/node/connected_users" interval=1200 N:2:2
+PUTVAL "casalduch/node/connected_users" interval=1200 N:3:0
+PUTVAL "paseouniversidad/node/connected_users" interval=1200 N:13:1
+PUTVAL "panderola/node/connected_users" interval=1200 N:9:0
+PUTVAL "benarabe/node/connected_users" interval=1200 N:10:1
+PUTVAL "graoPaseoBuenavista/node/connected_users" interval=1200 N:2:1
+PUTVAL "inforgames/node/connected_users" interval=1200 N:13:0
+PUTVAL "pabello/node/connected_users" interval=1200 N:12:3
+PUTVAL "riotamesis/node/connected_users" interval=1200 N:6:2
+PUTVAL "urbanizacionMadrigal/node/connected_users" interval=1200 N:3:1
         </code>
     </pre>
-  </section>
-  <section>
-    <h2>Línea de comandos explorador</h2>
-    <p>Actualizar información (distancia, red P2P, estado) de los enlaces monitorizados:</p>
-    <pre>
-        <code class="bash">
-$ ./manage update links
-
-# Actualizar los links del nodo castalia
-$ ./manage update links castalia
-        </code>
-    </pre>
-  </section>
-
-  <section>
-    <h2>Línea de comandos explorador</h2>
-    <p>Actualizar otra información:</p>
-    <pre>
-        <code class="bash">
-$ ./manage update routing
-$ ./manage update bandwidth
-$ ./manage update sysinfo
-$ ./manage update ospf
-        </code>
-    </pre>
-  </section>
-  <section class="fullscreen" data-background="img/nodedata.png">
-    <h1>Documento con la información de un nodo</h1>
-  </section>
-  <section class="fullscreen" data-background="img/linkdata.png">
-    <h1>Documento con la información de un enlace</h1>
   </section>
 </section>
