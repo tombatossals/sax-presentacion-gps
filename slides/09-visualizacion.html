@@ -1,0 +1,106 @@
+<section>
+  <section>
+    <h2>Arquitectura</h2>
+    <ul>
+        <li>Explorador de enlaces/equipos</li>
+        <li>Recolector</li>
+        <li>Agentes</li>
+        <li>Presentación de datos</li>
+    </ul>
+    <img style="width: 150px;" src="img/pieces.png" />
+  </section>
+  <section>
+    <h2>Explorador de enlaces/equipos</h2>
+    <p>Añadir un nuevo nodo o enlace al sistema tiene que ser tan fácil como introducir IP y coordenadas. El resto se obtiene de manera automática:</p>
+    <ul>
+        <li>Modelo de hardware, sistema, version</li>
+        <li>Interfaces de red funcionales</li>
+        <li>Validación de segmentos de red punto a punto.</li>
+        <li>Estado de la tabla de enrutado.</li>
+    </ul>
+    <p><strong>¿Cómo?</strong>RouterOS API (Mikrotik), SSH (OpenWRT)</p>
+  </section>
+  <section>
+    <h2>Línea de comandos explorador</h2>
+    <p>Añadir un nuevo nodo a la monitorización:</p>
+    <pre>
+        <code>
+$ cat node.json
+{
+    "name": "jrjimenez",
+    "system": "mikrotik",
+    "latlng": {
+        "lat": 39.979128,
+        "lng": -0.049640
+    }
+}
+
+$ ./manage add node node.json
+        </code>
+    </pre>
+  </section>
+  <section>
+    <h2>Línea de comandos explorador</h2>
+    <p>Añadir un nuevo enlace a la monitorización:</p>
+    <pre>
+        <code>
+$ cat link.json
+{
+  "nodes": [
+    {
+        "name": "jrjimenez"
+    },
+    {
+        "name": "casalduch"
+    }
+  ]
+}
+
+$ ./manage add link link.json
+        </code>
+    </pre>
+  </section>
+  <section>
+    <h2>Línea de comandos explorador</h2>
+    <p>Actualizar todas las interfaces de los nodos monitorizados:</p>
+    <pre>
+        <code class="bash">
+$ ./manage update interfaces
+
+# Actualizar las interfaces del nodo castalia
+$ ./manage update interfaces castalia
+        </code>
+    </pre>
+  </section>
+  <section>
+    <h2>Línea de comandos explorador</h2>
+    <p>Actualizar información (distancia, red P2P, estado) de los enlaces monitorizados:</p>
+    <pre>
+        <code class="bash">
+$ ./manage update links
+
+# Actualizar los links del nodo castalia
+$ ./manage update links castalia
+        </code>
+    </pre>
+  </section>
+
+  <section>
+    <h2>Línea de comandos explorador</h2>
+    <p>Actualizar otra información:</p>
+    <pre>
+        <code class="bash">
+$ ./manage update routing
+$ ./manage update bandwidth
+$ ./manage update sysinfo
+$ ./manage update ospf
+        </code>
+    </pre>
+  </section>
+  <section class="fullscreen" data-background="img/nodedata.png">
+    <h1>Documento con la información de un nodo</h1>
+  </section>
+  <section class="fullscreen" data-background="img/linkdata.png">
+    <h1>Documento con la información de un enlace</h1>
+  </section>
+</section>
