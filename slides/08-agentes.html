@@ -1,106 +1,80 @@
 <section>
   <section>
-    <h2>Arquitectura</h2>
+    <h2>Agentes</h2>
+    <p>Los agentes son cada uno de los dispositivos enrutadores y que establecen los enlaces inalámbricos que queremos tener monitorizados en nuestro sistema.</p>
     <ul>
-        <li>Explorador de enlaces/equipos</li>
-        <li>Recolector</li>
-        <li>Agentes</li>
-        <li>Presentación de datos</li>
+        <li>Agentes pasivos.</li>
+        <li>Responden a las consultas<br /> del recolector.</li>
+        <li>Configuración mínima.</li>
     </ul>
-    <img style="width: 150px;" src="img/pieces.png" />
+    <img style="width: 320px;" src="img/agentes.png" />
   </section>
   <section>
-    <h2>Explorador de enlaces/equipos</h2>
-    <p>Añadir un nuevo nodo o enlace al sistema tiene que ser tan fácil como introducir IP y coordenadas. El resto se obtiene de manera automática:</p>
+    <h2>Tipos de agentes</h2>
     <ul>
-        <li>Modelo de hardware, sistema, version</li>
-        <li>Interfaces de red funcionales</li>
-        <li>Validación de segmentos de red punto a punto.</li>
-        <li>Estado de la tabla de enrutado.</li>
+        <li>Mikrotik (acceso vía API)</li>
+        <li>OpenWRT (acceso vía SSH)</li>
     </ul>
-    <p><strong>¿Cómo?</strong>RouterOS API (Mikrotik), SSH (OpenWRT)</p>
+    <p>Necesario usuario/contraseña para acceder a consultar la información. Puede ser el usuario <strong>guest</strong> del <strong>unsolclick</strong>.</p>
   </section>
   <section>
-    <h2>Línea de comandos explorador</h2>
-    <p>Añadir un nuevo nodo a la monitorización:</p>
+    <h2>Activar acceso a la API RouterOS</h2>
     <pre>
         <code>
-$ cat node.json
-{
-    "name": "jrjimenez",
-    "system": "mikrotik",
-    "latlng": {
-        "lat": 39.979128,
-        "lng": -0.049640
-    }
-}
-
-$ ./manage add node node.json
+/ip service set api disabled=no
         </code>
     </pre>
   </section>
   <section>
-    <h2>Línea de comandos explorador</h2>
-    <p>Añadir un nuevo enlace a la monitorización:</p>
+    <h2>Bandwidth monitor</h2>
+    <p>Script de monitorización de ancho del banda de un enlace P2P en un nodo mikrotik</p>
     <pre>
         <code>
-$ cat link.json
-{
-  "nodes": [
-    {
-        "name": "jrjimenez"
-    },
-    {
-        "name": "casalduch"
-    }
-  ]
-}
-
-$ ./manage add link link.json
+/system script
+name="bandwidth" owner="admin" policy=ftp,reboot,read,write,policy,test,winbox,password,sniff,sensitive,api last-started=jun/06/2014 09:43:46 run-count=989 source=
+  :local ttx
+  :local rrx
+  :set ttx 0
+  :set rrx 0
+  :global ip
+  :global username
+  :global password
+  :global interval
+  :global duration
+  :global proto
+  /tool bandwidth-test $ip user=$username password=$password protocol=$proto \
+      direction=transmit interval=$interval duration=$duration do={
+      :if ($status="running") do={
+        :set ttx $"tx-total-average"
+      }
+  }
+  /tool bandwidth-test $ip user=$username password=$password protocol=$proto \
+      direction=receive interval=$interval duration=$duration do={
+      :if ($status="running") do={
+        :set rrx $"rx-total-average"
+      }
+  }
+  :put ("tx:". $ttx . " rx:" . $rrx )
         </code>
     </pre>
   </section>
   <section>
-    <h2>Línea de comandos explorador</h2>
-    <p>Actualizar todas las interfaces de los nodos monitorizados:</p>
+    <h2>Bandwidth monitor</h2>
+    <p>Para nodos <strong>OpenWRT</strong> utilizamos una versión del test de ancho de banda de mikrotik hecha para Linux.</p>
+    <p>Código fuente: <a href="https://github.com/kadosch/mikrotik_btest">https://github.com/kadosch/mikrotik_btest</a>.</p>
     <pre>
-        <code class="bash">
-$ ./manage update interfaces
-
-# Actualizar las interfaces del nodo castalia
-$ ./manage update interfaces castalia
+        <code>
+/usr/sbin/mikrotik_btest -d both -t 20 172.16.5.105
         </code>
     </pre>
   </section>
-  <section>
-    <h2>Línea de comandos explorador</h2>
-    <p>Actualizar información (distancia, red P2P, estado) de los enlaces monitorizados:</p>
-    <pre>
-        <code class="bash">
-$ ./manage update links
-
-# Actualizar los links del nodo castalia
-$ ./manage update links castalia
-        </code>
-    </pre>
+  <section class="fullscreen" data-background="img/bwidth.png">
+    <h1>Gráficas de ancho de banda</h1>
   </section>
-
-  <section>
-    <h2>Línea de comandos explorador</h2>
-    <p>Actualizar otra información:</p>
-    <pre>
-        <code class="bash">
-$ ./manage update routing
-$ ./manage update bandwidth
-$ ./manage update sysinfo
-$ ./manage update ospf
-        </code>
-    </pre>
+  <section class="fullscreen" data-background="img/bwidth02.png">
+    <h1>Gráficas de ancho de banda</h1>
   </section>
-  <section class="fullscreen" data-background="img/nodedata.png">
-    <h1>Documento con la información de un nodo</h1>
-  </section>
-  <section class="fullscreen" data-background="img/linkdata.png">
-    <h1>Documento con la información de un enlace</h1>
+  <section class="fullscreen" data-background="img/bwidth03.png">
+    <h1>Gráficas de ancho de banda</h1>
   </section>
 </section>
